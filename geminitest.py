@@ -6,7 +6,7 @@ from langchain_core.messages import HumanMessage
 import os
 print(os.environ["GOOGLE_API_KEY"])
 
-llm = ChatGoogleGenerativeAI(model="gemini-pro")
+llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-exp")
 
 messages = [
     HumanMessage(
