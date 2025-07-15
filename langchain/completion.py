@@ -1,7 +1,5 @@
 from openai import OpenAI
 import os
-# from dotenv import load_dotenv, find_dotenv
-# _ = load_dotenv(find_dotenv())
 
 client = OpenAI(
     base_url="https://api.deepseek.com/v1",
