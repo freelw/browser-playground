@@ -5,6 +5,8 @@ from browser_use import Agent
 from browser_use.llm import ChatDeepSeek
 from browser_use.browser import BrowserProfile
 
+os.environ["ANONYMIZED_TELEMETRY"] = "false"
+
 # Add your custom instructions
 extend_system_message = """
 Remember the most important rules: 
@@ -31,7 +33,7 @@ async def main():
 	agent = Agent(
 		task='navigate to bilibili.com and search for "DeepSeek AI"',
 		llm=llm,
-		use_vision=False,
+		use_vision=True,
 		message_context=extend_system_message,
 		browser_profile=profile
 	)
