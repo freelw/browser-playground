@@ -21,7 +21,6 @@ profile = BrowserProfile(
     keep_alive=True
 )
 
-
 async def main():
 	llm = ChatDeepSeek(
 		base_url='https://api.deepseek.com/v1',
