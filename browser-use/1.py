@@ -1,24 +1,36 @@
 import asyncio
-from dotenv import load_dotenv
-load_dotenv()
-from browser_use import Agent
-from browser_use.llm import ChatOpenAI
 import os
-api_key = os.getenv('DEEPSEEK_API_KEY')
-print(api_key)
 
+from browser_use import Agent
+from browser_use.llm import ChatDeepSeek
+
+# Add your custom instructions
 extend_system_message = """
-response in json format!
+Remember the most important rules: 
+1. When performing a search task, open https://www.google.com/ first for search. 
+2. Final output.
 """
+deepseek_api_key = os.getenv('DEEPSEEK_API_KEY')
+if deepseek_api_key is None:
+	print('Make sure you have DEEPSEEK_API_KEY:')
+	print('export DEEPSEEK_API_KEY=your_key')
+	exit(0)
+
 
 async def main():
-    llm = ChatOpenAI(base_url='https://api.deepseek.com/v1', model='deepseek-chat', api_key=api_key)
-    agent = Agent(
-        task="Compare the price of gpt-4o and DeepSeek-V3",
-        #llm=ChatOpenAI(model="o4-mini", temperature=1.0),
-        llm=llm,
-        message_context=extend_system_message
-    )
-    await agent.run()
+	llm = ChatDeepSeek(
+		base_url='https://api.deepseek.com/v1',
+		model='deepseek-chat',
+		api_key=deepseek_api_key,
+	)
+
+	agent = Agent(
+		task='What should we pay attention to in the recent new rules on tariffs in China-US trade?',
+		llm=llm,
+		use_vision=False,
+		message_context=extend_system_message,
+	)
+	await agent.run()
+
 
 asyncio.run(main())
