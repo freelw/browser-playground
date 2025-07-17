@@ -3,6 +3,7 @@ import os
 
 from browser_use import Agent
 from browser_use.llm import ChatDeepSeek
+from browser_use.browser import BrowserProfile
 
 # Add your custom instructions
 extend_system_message = """
@@ -16,6 +17,10 @@ if deepseek_api_key is None:
 	print('export DEEPSEEK_API_KEY=your_key')
 	exit(0)
 
+profile = BrowserProfile(
+    keep_alive=True
+)
+
 
 async def main():
 	llm = ChatDeepSeek(
@@ -25,10 +30,11 @@ async def main():
 	)
 
 	agent = Agent(
-		task='What should we pay attention to in the recent new rules on tariffs in China-US trade?',
+		task='navigate to bilibili.com and search for "DeepSeek AI"',
 		llm=llm,
 		use_vision=False,
 		message_context=extend_system_message,
+		browser_profile=profile
 	)
 	await agent.run()
 
